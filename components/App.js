@@ -1,5 +1,17 @@
 import { useState } from 'react';
 import { QueryClient, QueryClientProvider, useQuery } from 'react-query';
+import {
+  Container,
+  PostsList,
+  PostItem,
+  Fetching,
+  Loading,
+  Error,
+  PostTitle,
+  PostBody,
+  Button,
+  PostContainer,
+} from './styles';
 
 const queryClient = new QueryClient();
 
@@ -8,13 +20,13 @@ export default function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div>
+      <Container>
         {postId > -1 ? (
           <Post postId={postId} setPostId={setPostId} />
         ) : (
           <Posts setPostId={setPostId} />
         )}
-      </div>
+      </Container>
     </QueryClientProvider>
   );
 }
@@ -63,19 +75,21 @@ function Posts({ setPostId }) {
       <h1>Posts</h1>
       <div>
         {postsQuery.status === 'loading' ? (
-          <p>Loading...</p>
+          <Loading>Loading...</Loading>
         ) : postsQuery.status === 'error' ? (
-          <div>Error: {postsQuery.error.message}</div>
+          <Error>Error: {postsQuery.error.message}</Error>
         ) : (
           <>
-            <ul>
+            <PostsList>
               {postsQuery.data.map((post) => (
-                <li key={post.id} onClick={() => setPostId(post.id)}>
+                <PostItem key={post.id} onClick={() => setPostId(post.id)}>
                   {post.title}
-                </li>
+                </PostItem>
               ))}
-            </ul>
-            <div>{postsQuery.isFetching ? 'Background fetching...' : ''}</div>
+            </PostsList>
+            <Fetching>
+              {postsQuery.isFetching ? 'Background fetching...' : ''}
+            </Fetching>
           </>
         )}
       </div>
@@ -89,24 +103,26 @@ function Post({ postId, setPostId }) {
   console.log(postQuery);
 
   return (
-    <div>
-      <button onClick={() => setPostId(-1)}>← Back</button>
+    <PostContainer>
+      <Button onClick={() => setPostId(-1)}>← Back</Button>
       <div>
         {postQuery.status === 'loading' ? (
-          <div>Loading...</div>
+          <Loading>Loading...</Loading>
         ) : postQuery.status === 'error' ? (
-          <div>Error: {postQuery.error.message}</div>
+          <Error>Error: {postQuery.error.message}</Error>
         ) : (
           <>
-            <h1>{postQuery.data.title}</h1>
-            <div>
+            <PostTitle>{postQuery.data.title}</PostTitle>
+            <PostBody>
               <p>{postQuery.data.body}</p>
-            </div>
-            <div>{postQuery.isFetching ? 'Background fetching...' : ''}</div>
+            </PostBody>
+            <Fetching>
+              {postQuery.isFetching ? 'Background fetching...' : ''}
+            </Fetching>
           </>
         )}
       </div>
-    </div>
+    </PostContainer>
   );
 }
 
