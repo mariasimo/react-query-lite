@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { QueryClient, QueryClientProvider, useQuery } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
 import {
   Container,
   PostsList,
@@ -27,6 +28,7 @@ export default function App() {
           <Posts setPostId={setPostId} />
         )}
       </Container>
+      <ReactQueryDevtools />
     </QueryClientProvider>
   );
 }
