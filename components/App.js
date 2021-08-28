@@ -1,6 +1,4 @@
 import { useState } from 'react';
-import { QueryClient, QueryClientProvider, useQuery } from 'react-query';
-import { ReactQueryDevtools } from 'react-query/devtools';
 import {
   Container,
   PostsList,
@@ -12,9 +10,20 @@ import {
   PostBody,
   Button,
   PostContainer,
-} from './styles';
+} from '../styles';
+// import { QueryClient, QueryClientProvider, useQuery } from 'react-query';
+// import { ReactQueryDevtools } from 'react-query/devtools';
+
+import {
+  QueryClient,
+  QueryClientProvider,
+  useQuery,
+  ReactQueryDevtools,
+} from '../utils/react-query-lite';
 
 const queryClient = new QueryClient();
+
+// Our App and "router"
 
 export default function App() {
   const [postId, setPostId] = useState(-1);
@@ -46,8 +55,8 @@ function usePosts() {
 
       return data.slice(0, 5);
     },
-    // staleTime: 3000,
-    // cacheTime: 5000
+    staleTime: 3000,
+    cacheTime: 5000,
   });
 }
 
@@ -62,15 +71,13 @@ function usePost(postId) {
 
       return data;
     },
-    // staleTime: 3000,
-    // cacheTime: 5000
+    staleTime: 3000,
+    cacheTime: 5000,
   });
 }
 
 function Posts({ setPostId }) {
   const postsQuery = usePosts();
-
-  console.log(postsQuery);
 
   return (
     <div>
@@ -101,8 +108,6 @@ function Posts({ setPostId }) {
 
 function Post({ postId, setPostId }) {
   const postQuery = usePost(postId);
-
-  console.log(postQuery);
 
   return (
     <PostContainer>

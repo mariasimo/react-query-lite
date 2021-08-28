@@ -5,6 +5,7 @@ export const Container = styled.main`
   padding: 2rem;
   width: 100%;
   max-width: 48rem;
+  color: #1e2231;
 `;
 
 export const PostItem = styled.li`
@@ -74,4 +75,35 @@ export const PostContainer = styled.article`
   ${Button} {
     margin-bottom: 1.5rem;
   }
+`;
+
+export const DevtoolsContainer = styled.div`
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #1e2231;
+  color: white;
+  font-weight: 600;
+`;
+
+export const Query = styled.div`
+  padding: 1rem;
+
+  &:not(:last-child) {
+    border-bottom: 0.0625rem solid #33353e;
+  }
+`;
+
+export const StatusFetching = styled.span`
+  color: dodgerblue;
+`;
+export const StatusSuccess = styled.span`
+  color: mediumseagreen;
+`;
+export const StatusError = styled.span`
+  color: tomato;
+`;
+export const StatusInactive = styled.span`
+  color: #a6abbb;
 `;
